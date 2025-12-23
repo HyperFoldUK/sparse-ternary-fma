@@ -1,0 +1,92 @@
+# sparse-ternary-fma: The Kernel That Makes Ternary Arithmetic Practical
+
+**Author:** Maurice Wilson, Founder, HyperFold Technologies UK  
+**Contact:** maurice.wilson@hyperfold-technologies.com  
+**Website:** https://www.hyperfold-technologies.com
+
+---
+
+## The Problem: The Bottleneck in TFHE and Low-Precision AI
+
+Fully Homomorphic Encryption (FHE) promises to revolutionize secure computing, but its practical adoption has been hindered by a significant performance bottleneck. Schemes like TFHE (Fully Homomorphic Encryption over the Torus) rely on polynomial arithmetic, where the multiplication of large polynomials is the most computationally expensive operation. When using ternary secret keys (composed of -1, 0, and 1), traditional integer representations are incredibly inefficient, wasting up to 87.5% of the memory and computational resources. This overhead makes it challenging to build high-performance, client-side FHE applications and limits the advancement of low-precision AI, which could otherwise benefit from the speed and efficiency of ternary arithmetic.
+
+## The Solution: Sparse Processing, 2-Bit Packing, and SIMD Acceleration
+
+The **sparse-ternary-fma** kernel is a dependency-free C library that provides a highly optimized solution to this problem. It introduces three key innovations:
+
+1.  **2-Bit Ternary Encoding:** Instead of using 8 or 32 bits to store a ternary value, we use a compact 2-bit representation. This simple change results in a 4x to 16x improvement in data density, allowing us to pack 256 trits into a single 512-bit AVX-512 vector.
+
+2.  **Sparse Processing:** The kernel is optimized for sparse ternary keys, which are common in FHE. By processing only the non-zero elements, we can achieve a significant speedup, often exceeding 16x for typical key distributions.
+
+3.  **SIMD Acceleration:** The kernel includes a hand-optimized AVX-512 implementation that performs a fused multiply-add (FMA) operation on 8 coefficients simultaneously. This results in a 2.38x throughput improvement over the scalar implementation.
+
+## The Proof: Performance Gains and Formal Verification
+
+The performance and security of the sparse-ternary-fma kernel are formally documented in the Cryptology ePrint report: **T-Encrypt (t-Enc) T-FHE: A Production-Ready TFHE Implementation with Ternary Secret Keys and SIMD Optimizations** (link to be confirmed). Our benchmarks demonstrate the following performance gains:
+
+| Metric | Improvement |
+| :--- | :--- |
+| **Throughput** | 2.38x |
+| **Latency** | 26.12x |
+
+These results validate the effectiveness of our approach and highlight the potential of this kernel to accelerate a wide range of applications.
+
+## The Vision: Advancing the Field Through Open-Source Innovation
+
+This kernel enables efficient client-side FHE and next-generation AI. It is released openly under the MIT license to advance the field and provide a public standard that others can build upon. We believe that by open-sourcing this core component, we can foster a community of developers and researchers who will help us push the boundaries of what is possible with FHE and low-precision AI.
+
+## Link Back
+
+This kernel is part of the broader HyperFold T-Encrypt (T-Enc) T-FHE architecture. For the full production system with advanced optimizations, see the evaluation repository.
+
+## Getting Started
+
+### Prerequisites
+
+*   A C compiler (GCC or Clang)
+*   `make`
+*   An x86-64 CPU with AVX-512 support (for the SIMD-accelerated version)
+
+### Building the Library and Benchmark
+
+To build the library and run the benchmark, simply run `make`:
+
+```bash
+make
+```
+
+This will create the following files:
+
+*   `lib/libsparsetfma.a`: The static library
+*   `lib/libsparsetfma.so`: The shared library
+*   `bin/benchmark`: The benchmark executable
+
+### Running the Benchmark
+
+To run the benchmark, run the following command:
+
+```bash
+make benchmark
+```
+
+This will run a series of correctness tests and performance benchmarks and print the results to the console.
+
+## Usage
+
+To use the sparse-ternary-fma kernel in your own project, you can either link against the static or shared library, or you can simply include the source files in your project.
+
+### API Overview
+
+The library exposes a simple C API for encoding, decoding, and performing the sparse ternary FMA operation.
+
+*   `encode_trit(int8_t value)`: Encodes a ternary value to its 2-bit representation.
+*   `decode_trit(uint8_t trit)`: Decodes a 2-bit trit to its ternary value.
+*   `pack_trit_array(const int8_t* trits, uint8_t* packed, size_t N)`: Packs an array of ternary values into a 2-bit representation.
+*   `unpack_trit_array(const uint8_t* packed, int8_t* trits, size_t N)`: Unpacks a 2-bit array into ternary values.
+*   `sparse_ternary_fma(const int64_t* A, const uint8_t* B_trit, int64_t* C, size_t N)`: Performs the sparse ternary FMA operation.
+
+For more details, please see the header file `include/sparse_ternary_fma.h`.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
