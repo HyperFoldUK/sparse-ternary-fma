@@ -33,7 +33,7 @@ These results validate the effectiveness of our approach and highlight the poten
 
 ## The Vision: Advancing the Field Through Open-Source Innovation
 
-This kernel enables efficient client-side FHE and next-generation AI. It is released openly under the MIT license to advance the field and provide a public standard that others can build upon. We believe that by open-sourcing this core component, we can foster a community of developers and researchers who will help us push the boundaries of what is possible with FHE and low-precision AI.
+This kernel enables efficient client-side FHE and next-generation AI. It is released openly under the GNU Affero General Public License v3 (AGPLv3) to advance the field and provide a public standard that others can build upon. The AGPLv3 ensures that improvements made to this kernel, including those used in network services, remain open and available to the community. We believe that by open-sourcing this core component with strong copyleft protections, we can foster a community of developers and researchers who will help us push the boundaries of what is possible with FHE and low-precision AI.
 
 ## Link Back
 
@@ -89,4 +89,11 @@ For more details, please see the header file `include/sparse_ternary_fma.h`.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU Affero General Public License v3 (AGPLv3) - see the [LICENSE](LICENSE) file for details.
+
+The AGPLv3 is a strong copyleft license that ensures:
+- Freedom to use, study, modify, and distribute the software
+- Any modifications, including those used in network services, must be shared under the same license
+- Source code must be made available to users of network services based on this code
+
+For more information about AGPLv3, visit: https://www.gnu.org/licenses/agpl-3.0.html

@@ -297,5 +297,7 @@ Website: https://www.hyperfold-technologies.com
 
 ---
 
-**License:** MIT  
+**License:** GNU Affero General Public License v3 (AGPLv3)  
 **Copyright:** © 2025 HyperFold Technologies UK Ltd
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See the LICENSE file for full details.
