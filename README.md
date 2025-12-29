@@ -6,9 +6,17 @@
 
 ---
 
-## The Problem: The Bottleneck in TFHE and Low-Precision AI
+## The Problem: The Bottleneck in TFHE and Low-Precision LLM Inference
 
-Fully Homomorphic Encryption (FHE) promises to revolutionize secure computing, but its practical adoption has been hindered by a significant performance bottleneck. Schemes like TFHE (Fully Homomorphic Encryption over the Torus) rely on polynomial arithmetic, where the multiplication of large polynomials is the most computationally expensive operation. When using ternary secret keys (composed of -1, 0, and 1), traditional integer representations are incredibly inefficient, wasting up to 87.5% of the memory and computational resources. This overhead makes it challenging to build high-performance, client-side FHE applications and limits the advancement of low-precision AI, which could otherwise benefit from the speed and efficiency of ternary arithmetic.
+Two critical domains face the same fundamental bottleneck: **ternary arithmetic efficiency**.
+
+### Fully Homomorphic Encryption (FHE)
+
+Fully Homomorphic Encryption promises to revolutionize secure computing, but its practical adoption has been hindered by a significant performance bottleneck. Schemes like TFHE (Fully Homomorphic Encryption over the Torus) rely on polynomial arithmetic, where the multiplication of large polynomials is the most computationally expensive operation. When using ternary secret keys (composed of -1, 0, and 1), traditional integer representations are incredibly inefficient, wasting up to 87.5% of the memory and computational resources. This overhead makes it challenging to build high-performance, client-side FHE applications.
+
+### Low-Precision LLM Inference
+
+Modern Large Language Models (LLMs) are increasingly adopting ternary quantization (BitNet, 1.58-bit models) to reduce memory footprint and computational cost. However, traditional frameworks represent ternary weights using 8-bit or 32-bit integers, wasting 75-93% of memory bandwidth and storage. Matrix-vector multiplications in transformer layers—the dominant operation in LLM inference—suffer from this inefficiency, limiting deployment on edge devices and increasing inference latency. **Efficient ternary arithmetic is the key to unlocking real-time, on-device LLM inference.**
 
 ## The Solution: Sparse Processing, 2-Bit Packing, and SIMD Acceleration
 
@@ -62,7 +70,36 @@ This is not an incremental improvement—it represents a **fundamental architect
 
 ## The Vision: Advancing the Field Through Open-Source Innovation
 
-This kernel enables efficient client-side FHE and next-generation AI. It is released openly under the GNU Affero General Public License v3 (AGPLv3) to advance the field and provide a public standard that others can build upon. The AGPLv3 ensures that improvements made to this kernel, including those used in network services, remain open and available to the community. We believe that by open-sourcing this core component with strong copyleft protections, we can foster a community of developers and researchers who will help us push the boundaries of what is possible with FHE and low-precision AI.
+This kernel enables efficient client-side FHE and next-generation AI. It is released openly under the **Apache License 2.0** to advance the field and provide a public standard that others can build upon. The Apache 2.0 license provides:
+
+- **Permissive usage**: Free to use in commercial and open-source projects
+- **Patent protection**: Explicit grant of patent rights from contributors
+- **Attribution**: Simple requirement to preserve copyright notices
+- **No copyleft**: Modifications can be proprietary, enabling broad adoption
+
+We believe that by open-sourcing this core component with a permissive license, we can maximize adoption across FHE libraries, LLM inference frameworks, and low-precision AI accelerators, ultimately advancing the entire field.
+
+## Use Cases
+
+### FHE Applications
+
+- **Client-side encryption**: Enable real-time FHE operations on commodity hardware
+- **Secure multi-party computation**: Accelerate collaborative analytics without revealing private data
+- **Privacy-preserving cloud services**: Build scalable FHE services with 50-100× cost reduction
+- **Encrypted database queries**: Interactive latency for private information retrieval
+
+### LLM Inference Applications
+
+- **On-device LLM inference**: Deploy ternary-quantized models (BitNet, 1.58-bit) on mobile and edge devices
+- **Real-time transformer inference**: Accelerate matrix-vector multiplications in attention layers
+- **Memory-efficient serving**: Reduce model size by 4-16× with 2-bit weight storage
+- **Sparse model optimization**: Exploit weight sparsity in pruned and quantized models
+
+### Low-Precision AI
+
+- **Ternary neural networks**: Native support for {-1, 0, +1} weight quantization
+- **Edge AI accelerators**: Maximize throughput on resource-constrained devices
+- **Energy-efficient inference**: Minimize memory bandwidth and power consumption
 
 ## Link Back
 
@@ -118,11 +155,12 @@ For more details, please see the header file `include/sparse_ternary_fma.h`.
 
 ## License
 
-This project is licensed under the GNU Affero General Public License v3 (AGPLv3) - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-The AGPLv3 is a strong copyleft license that ensures:
-- Freedom to use, study, modify, and distribute the software
-- Any modifications, including those used in network services, must be shared under the same license
-- Source code must be made available to users of network services based on this code
+The Apache 2.0 license is a permissive open-source license that:
+- Allows free use in commercial and open-source projects
+- Provides explicit patent protection from contributors
+- Requires preservation of copyright and license notices
+- Permits proprietary modifications and derivatives
 
-For more information about AGPLv3, visit: https://www.gnu.org/licenses/agpl-3.0.html
+For more information about Apache 2.0, visit: https://www.apache.org/licenses/LICENSE-2.0

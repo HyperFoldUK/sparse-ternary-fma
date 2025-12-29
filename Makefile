@@ -1,7 +1,7 @@
 # Sparse Ternary FMA Kernel - Build Configuration
-# Copyright (C) 2025 HyperFold Technologies UK Ltd
+# Copyright 2025 HyperFold Technologies UK Ltd
 # Author: Maurice Wilson
-# License: AGPLv3
+# License: Apache 2.0
 
 # Compiler settings
 CC = gcc
